@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support Request</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: #f4f6f9;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 40px auto;
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 14px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #16325c;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      margin-top: 14px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccd6dd;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      border: none;
+      background: #0176d3;
+      color: white;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .submit-btn:hover {
+      background: #005fb2;
+    }
+
+    .note {
+      font-size: 12px;
+      color: #666;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 16px;
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Raise a Support Case</h2>
+
+    <form action="https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8&orgId=00DdM00000r5FUZ" method="POST">
+      
+      <input type="hidden" name="orgid" value="00DdM00000r5FUZ">
+      <input type="hidden" name="retURL" value="https://www.google.com">
+
+      <label for="name">Contact Name</label>
+      <input id="name" maxlength="80" name="name" type="text" placeholder="Enter your name" required>
+
+      <label for="email">Email</label>
+      <input id="email" maxlength="80" name="email" type="email" placeholder="Enter your email" required>
+
+      <label for="phone">Phone</label>
+      <input id="phone" maxlength="40" name="phone" type="tel" placeholder="Enter your phone number">
+
+      <label for="subject">Subject</label>
+      <input id="subject" maxlength="80" name="subject" type="text" placeholder="Enter subject" required>
+
+      <label for="description">Description</label>
+      <textarea name="description" placeholder="Describe your issue" required></textarea>
+
+      <input class="submit-btn" type="submit" name="submit" value="Submit Case">
+    </form>
+
+    <div class="note">
+      Your request will be submitted directly to Salesforce.
+    </div>
+  </div>
+</body>
+</html>
