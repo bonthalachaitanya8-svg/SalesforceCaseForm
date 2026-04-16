@@ -13,39 +13,73 @@
     body {
       margin: 0;
       padding: 0;
-      background: #f4f6f9;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f172a, #1e3a8a, #0ea5e9);
+      background-size: 300% 300%;
+      animation: gradientMove 10s ease infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .container {
-      max-width: 500px;
-      margin: 40px auto;
-      background: #ffffff;
-      padding: 24px;
-      border-radius: 14px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      width: 100%;
+      max-width: 520px;
+      margin: 20px;
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+      color: white;
+      animation: cardIn 1s ease;
+    }
+
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.96);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     h2 {
+      margin-top: 0;
       text-align: center;
-      margin-bottom: 20px;
-      color: #16325c;
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      opacity: 0.9;
+      margin-bottom: 22px;
     }
 
     label {
       display: block;
-      margin-bottom: 6px;
-      margin-top: 14px;
+      margin: 12px 0 6px;
       font-weight: bold;
-      color: #333;
     }
 
     input,
     textarea {
       width: 100%;
-      padding: 12px;
-      border: 1px solid #ccd6dd;
-      border-radius: 8px;
-      font-size: 14px;
+      padding: 14px;
+      border: none;
+      outline: none;
+      border-radius: 12px;
+      font-size: 15px;
     }
 
     textarea {
@@ -55,44 +89,61 @@
 
     .submit-btn {
       width: 100%;
-      margin-top: 20px;
+      margin-top: 18px;
       padding: 14px;
       border: none;
-      background: #0176d3;
-      color: white;
+      border-radius: 14px;
       font-size: 16px;
-      border-radius: 8px;
-      cursor: pointer;
       font-weight: bold;
+      cursor: pointer;
+      background: linear-gradient(90deg, #22c55e, #06b6d4);
+      color: white;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     .submit-btn:hover {
-      background: #005fb2;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
     }
 
-    .note {
-      font-size: 12px;
-      color: #666;
-      margin-top: 12px;
+    .submit-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .loader {
+      display: none;
       text-align: center;
+      margin-top: 14px;
+      font-size: 14px;
+      opacity: 0.95;
     }
 
-    @media (max-width: 600px) {
-      .container {
-        margin: 16px;
-        padding: 18px;
-      }
+    .dots::after {
+      content: "";
+      animation: dots 1.2s infinite steps(4);
+    }
+
+    @keyframes dots {
+      0% { content: ""; }
+      25% { content: "."; }
+      50% { content: ".."; }
+      75% { content: "..."; }
+      100% { content: ""; }
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h2>Raise a Support Case</h2>
+    <div class="subtitle">We are here to help you</div>
 
-    <form action="https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8&orgId=00DdM00000r5FUZ" method="POST">
-      
+    <form id="webToCaseForm"
+      action="https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8&orgId=00DdM00000r5FUZ"
+      method="POST">
+
       <input type="hidden" name="orgid" value="00DdM00000r5FUZ">
-      <input type="hidden" name="retURL" value="https://www.google.com">
+      <input type="hidden" name="retURL" value="https://bonthalachaitanya8-svg.github.io/YOUR-REPO-NAME/thankyou.html">
 
       <label for="name">Contact Name</label>
       <input id="name" maxlength="80" name="name" type="text" placeholder="Enter your name" required>
@@ -109,12 +160,24 @@
       <label for="description">Description</label>
       <textarea name="description" placeholder="Describe your issue" required></textarea>
 
-      <input class="submit-btn" type="submit" name="submit" value="Submit Case">
+      <input id="submitBtn" class="submit-btn" type="submit" value="Submit Case">
+      <div id="loader" class="loader">Submitting your case<span class="dots"></span></div>
     </form>
-
-    <div class="note">
-      Your request will be submitted directly to Salesforce.
-    </div>
   </div>
+
+  <script>
+    const form = document.getElementById('webToCaseForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const loader = document.getElementById('loader');
+
+    form.addEventListener('submit', function () {
+      const contactName = document.getElementById('name').value || 'Customer';
+      localStorage.setItem('webToCaseContactName', contactName);
+
+      submitBtn.disabled = true;
+      submitBtn.value = 'Submitting...';
+      loader.style.display = 'block';
+    });
+  </script>
 </body>
 </html>
