@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thank You</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at top, #1e3a8a, #0f172a 70%);
+      color: white;
+      position: relative;
+    }
+
+    .stars, .stars2, .stars3 {
+      position: absolute;
+      inset: 0;
+      background-repeat: repeat;
+      animation: moveStars linear infinite;
+      opacity: 0.5;
+    }
+
+    .stars {
+      background-image:
+        radial-gradient(2px 2px at 20px 30px, white, transparent),
+        radial-gradient(2px 2px at 140px 80px, white, transparent),
+        radial-gradient(2px 2px at 220px 150px, white, transparent),
+        radial-gradient(2px 2px at 320px 40px, white, transparent);
+      background-size: 400px 220px;
+      animation-duration: 20s;
+    }
+
+    .stars2 {
+      background-image:
+        radial-gradient(2px 2px at 50px 100px, #93c5fd, transparent),
+        radial-gradient(2px 2px at 170px 180px, #bfdbfe, transparent),
+        radial-gradient(2px 2px at 280px 70px, #dbeafe, transparent);
+      background-size: 500px 260px;
+      animation-duration: 35s;
+    }
+
+    .stars3 {
+      background-image:
+        radial-gradient(3px 3px at 100px 50px, #60a5fa, transparent),
+        radial-gradient(3px 3px at 300px 190px, #38bdf8, transparent);
+      background-size: 600px 300px;
+      animation-duration: 50s;
+    }
+
+    @keyframes moveStars {
+      from { transform: translateY(0); }
+      to { transform: translateY(-200px); }
+    }
+
+    .card {
+      position: relative;
+      z-index: 2;
+      width: min(92%, 700px);
+      text-align: center;
+      padding: 42px 28px;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+      animation: floatCard 3s ease-in-out infinite;
+    }
+
+    @keyframes floatCard {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .tick-wrap {
+      width: 110px;
+      height: 110px;
+      margin: 0 auto 22px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #22c55e, #06b6d4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 30px rgba(34,197,94,0.45);
+      animation: popIn 0.8s ease;
+    }
+
+    .tick {
+      font-size: 58px;
+      line-height: 1;
+      animation: tickBounce 1.2s ease;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes tickBounce {
+      0% { transform: scale(0); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    h1 {
+      margin: 0 0 14px;
+      font-size: 40px;
+      animation: fadeUp 1s ease;
+    }
+
+    .name {
+      display: inline-block;
+      background: linear-gradient(90deg, #93c5fd, #67e8f9, #86efac);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: bold;
+    }
+
+    .message {
+      font-size: 18px;
+      line-height: 1.7;
+      opacity: 0.95;
+      animation: fadeUp 1.4s ease;
+    }
+
+    .small {
+      margin-top: 18px;
+      font-size: 14px;
+      opacity: 0.8;
+      animation: fadeUp 1.8s ease;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 26px;
+      text-decoration: none;
+      color: white;
+      padding: 14px 22px;
+      border-radius: 14px;
+      background: linear-gradient(90deg, #2563eb, #06b6d4);
+      font-weight: bold;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      animation: fadeUp 2s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+    }
+
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 18px;
+      top: -20px;
+      opacity: 0.9;
+      animation: confettiFall linear forwards;
+    }
+
+    @keyframes confettiFall {
+      to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 640px) {
+      h1 {
+        font-size: 30px;
+      }
+
+      .message {
+        font-size: 16px;
+      }
+
+      .card {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars"></div>
+  <div class="stars2"></div>
+  <div class="stars3"></div>
+
+  <div class="card">
+    <div class="tick-wrap">
+      <div class="tick">✓</div>
+    </div>
+
+    <h1>Thank You, <span class="name" id="contactName">Customer</span>!</h1>
+
+    <div class="message">
+      Your support request has been submitted successfully.<br>
+      Our team has received your case and will reach out to you soon.
+    </div>
+
+    <div class="small">
+      We appreciate your time and trust.
+    </div>
+
+    <a class="btn" href="./index.html">Submit Another Case</a>
+  </div>
+
+  <script>
+    const savedName = localStorage.getItem('webToCaseContactName');
+    if (savedName && savedName.trim()) {
+      document.getElementById('contactName').textContent = savedName;
+    }
+
+    const colors = ['#22c55e', '#06b6d4', '#f59e0b', '#ec4899', '#a78bfa', '#f43f5e'];
+
+    for (let i = 0; i < 70; i++) {
+      const confetti = document.createElement('div');
+      confetti.classList.add('confetti');
+      confetti.style.left = Math.random() * 100 + 'vw';
+      confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+      confetti.style.animationDuration = (3 + Math.random() * 4) + 's';
+      confetti.style.animationDelay = (Math.random() * 2) + 's';
+      confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+      document.body.appendChild(confetti);
+    }
+  </script>
+</body>
+</html>
