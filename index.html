@@ -3,49 +3,81 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Support Request</title>
+  <title>Salesforce Support Case</title>
   <style>
     * {
       box-sizing: border-box;
+      margin: 0;
+      padding: 0;
       font-family: Arial, sans-serif;
     }
 
     body {
-      margin: 0;
-      padding: 0;
       min-height: 100vh;
-      background: linear-gradient(135deg, #0f172a, #1e3a8a, #0ea5e9);
-      background-size: 300% 300%;
-      animation: gradientMove 10s ease infinite;
+      overflow: hidden;
+      background: linear-gradient(-45deg, #0f172a, #1d4ed8, #06b6d4, #22c55e);
+      background-size: 400% 400%;
+      animation: gradientShift 12s ease infinite;
+      position: relative;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
+      padding: 20px;
     }
 
-    @keyframes gradientMove {
+    @keyframes gradientShift {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
-    .container {
-      width: 100%;
-      max-width: 520px;
-      margin: 20px;
-      background: rgba(255,255,255,0.12);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 24px;
-      padding: 28px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.25);
-      color: white;
-      animation: cardIn 1s ease;
+    .bg-bubble {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      animation: floatBubble linear infinite;
+      backdrop-filter: blur(4px);
     }
 
-    @keyframes cardIn {
+    .b1 { width: 120px; height: 120px; left: 8%; top: 75%; animation-duration: 16s; }
+    .b2 { width: 80px; height: 80px; left: 20%; top: 20%; animation-duration: 13s; }
+    .b3 { width: 150px; height: 150px; right: 10%; top: 70%; animation-duration: 18s; }
+    .b4 { width: 100px; height: 100px; right: 15%; top: 15%; animation-duration: 15s; }
+    .b5 { width: 60px; height: 60px; left: 50%; top: 85%; animation-duration: 10s; }
+
+    @keyframes floatBubble {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.2;
+      }
+      50% {
+        opacity: 0.5;
+      }
+      100% {
+        transform: translateY(-110vh) scale(1.3);
+        opacity: 0;
+      }
+    }
+
+    .card {
+      width: 100%;
+      max-width: 540px;
+      position: relative;
+      z-index: 2;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(16px);
+      border-radius: 28px;
+      padding: 30px 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.28);
+      color: #fff;
+      animation: cardEntry 1s ease;
+    }
+
+    @keyframes cardEntry {
       from {
         opacity: 0;
-        transform: translateY(40px) scale(0.96);
+        transform: translateY(40px) scale(0.95);
       }
       to {
         opacity: 1;
@@ -53,33 +85,109 @@
       }
     }
 
-    h2 {
-      margin-top: 0;
+    .header {
       text-align: center;
-      font-size: 30px;
-      margin-bottom: 8px;
+      margin-bottom: 22px;
     }
 
-    .subtitle {
-      text-align: center;
-      opacity: 0.9;
-      margin-bottom: 22px;
+    .logo-badge {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 14px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #22c55e, #06b6d4, #2563eb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      box-shadow: 0 0 25px rgba(255,255,255,0.25);
+      animation: pulseGlow 2.2s infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(255,255,255,0.20); }
+      50% { transform: scale(1.08); box-shadow: 0 0 36px rgba(255,255,255,0.35); }
+    }
+
+    h1 {
+      font-size: 30px;
+      margin-bottom: 8px;
+      animation: fadeUp 1s ease;
+    }
+
+    .subtext {
+      font-size: 15px;
+      color: rgba(255,255,255,0.9);
+      animation: fadeUp 1.4s ease;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .sound-row {
+      display: flex;
+      justify-content: center;
+      margin: 18px 0 6px;
+    }
+
+    .sound-btn {
+      border: none;
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .sound-btn:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.28);
+    }
+
+    form {
+      margin-top: 12px;
+    }
+
+    .field {
+      margin-bottom: 14px;
+      animation: fadeUp 1.6s ease;
     }
 
     label {
       display: block;
-      margin: 12px 0 6px;
+      margin-bottom: 6px;
       font-weight: bold;
+      font-size: 14px;
     }
 
     input,
     textarea {
       width: 100%;
-      padding: 14px;
-      border: none;
+      padding: 14px 14px;
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.92);
+      color: #0f172a;
       outline: none;
-      border-radius: 12px;
-      font-size: 15px;
+      font-size: 14px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border 0.2s ease;
+    }
+
+    input:focus,
+    textarea:focus {
+      transform: scale(1.02);
+      border: 1px solid #38bdf8;
+      box-shadow: 0 0 0 4px rgba(56,189,248,0.18);
     }
 
     textarea {
@@ -89,25 +197,33 @@
 
     .submit-btn {
       width: 100%;
-      margin-top: 18px;
-      padding: 14px;
+      padding: 15px;
       border: none;
-      border-radius: 14px;
-      font-size: 16px;
+      border-radius: 16px;
+      background: linear-gradient(90deg, #16a34a, #06b6d4, #2563eb);
+      background-size: 200% 200%;
+      color: #fff;
       font-weight: bold;
+      font-size: 16px;
       cursor: pointer;
-      background: linear-gradient(90deg, #22c55e, #06b6d4);
-      color: white;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      animation: buttonFlow 3s ease infinite;
+      margin-top: 6px;
+    }
+
+    @keyframes buttonFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     .submit-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.22);
     }
 
     .submit-btn:disabled {
-      opacity: 0.7;
+      opacity: 0.75;
       cursor: not-allowed;
     }
 
@@ -116,7 +232,7 @@
       text-align: center;
       margin-top: 14px;
       font-size: 14px;
-      opacity: 0.95;
+      color: rgba(255,255,255,0.95);
     }
 
     .dots::after {
@@ -131,12 +247,48 @@
       75% { content: "..."; }
       100% { content: ""; }
     }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.85);
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 24px 18px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .logo-badge {
+        width: 62px;
+        height: 62px;
+        font-size: 26px;
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>Raise a Support Case</h2>
-    <div class="subtitle">We are here to help you</div>
+  <div class="bg-bubble b1"></div>
+  <div class="bg-bubble b2"></div>
+  <div class="bg-bubble b3"></div>
+  <div class="bg-bubble b4"></div>
+  <div class="bg-bubble b5"></div>
+
+  <div class="card">
+    <div class="header">
+      <div class="logo-badge">🔔</div>
+      <h1>Raise a Support Case</h1>
+      <div class="subtext">Fast, simple, and beautifully connected to Salesforce</div>
+    </div>
+
+    <div class="sound-row">
+      <button type="button" class="sound-btn" id="soundBtn">🔔 Tap to Enable Bell Sound</button>
+    </div>
 
     <form id="webToCaseForm"
       action="https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8&orgId=00DdM00000r5FUZ"
@@ -145,23 +297,37 @@
       <input type="hidden" name="orgid" value="00DdM00000r5FUZ">
       <input type="hidden" name="retURL" value="https://bonthalachaitanya8-svg.github.io/SalesforceCaseForm/thankyou.html">
 
-      <label for="name">Contact Name</label>
-      <input id="name" maxlength="80" name="name" type="text" placeholder="Enter your name" required>
+      <div class="field">
+        <label for="name">Contact Name</label>
+        <input id="name" maxlength="80" name="name" type="text" placeholder="Enter your name" required>
+      </div>
 
-      <label for="email">Email</label>
-      <input id="email" maxlength="80" name="email" type="email" placeholder="Enter your email" required>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" maxlength="80" name="email" type="email" placeholder="Enter your email" required>
+      </div>
 
-      <label for="phone">Phone</label>
-      <input id="phone" maxlength="40" name="phone" type="tel" placeholder="Enter your phone number">
+      <div class="field">
+        <label for="phone">Phone</label>
+        <input id="phone" maxlength="40" name="phone" type="tel" placeholder="Enter your phone number">
+      </div>
 
-      <label for="subject">Subject</label>
-      <input id="subject" maxlength="80" name="subject" type="text" placeholder="Enter subject" required>
+      <div class="field">
+        <label for="subject">Subject</label>
+        <input id="subject" maxlength="80" name="subject" type="text" placeholder="Enter subject" required>
+      </div>
 
-      <label for="description">Description</label>
-      <textarea name="description" placeholder="Describe your issue" required></textarea>
+      <div class="field">
+        <label for="description">Description</label>
+        <textarea name="description" placeholder="Describe your issue" required></textarea>
+      </div>
 
       <input id="submitBtn" class="submit-btn" type="submit" value="Submit Case">
-      <div id="loader" class="loader">Submitting your case<span class="dots"></span></div>
+      <div id="loader" class="loader">Submitting your support request<span class="dots"></span></div>
+
+      <div class="footer-note">
+        Your request will be submitted securely to Salesforce.
+      </div>
     </form>
   </div>
 
@@ -169,10 +335,49 @@
     const form = document.getElementById('webToCaseForm');
     const submitBtn = document.getElementById('submitBtn');
     const loader = document.getElementById('loader');
+    const soundBtn = document.getElementById('soundBtn');
+
+    let soundEnabled = false;
+
+    function playBell() {
+      if (!soundEnabled) return;
+
+      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioCtx.createOscillator();
+      const gainNode = audioCtx.createGain();
+
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(880, audioCtx.currentTime);
+      oscillator.frequency.exponentialRampToValueAtTime(660, audioCtx.currentTime + 0.18);
+
+      gainNode.gain.setValueAtTime(0.0001, audioCtx.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.15, audioCtx.currentTime + 0.02);
+      gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.45);
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioCtx.destination);
+
+      oscillator.start();
+      oscillator.stop(audioCtx.currentTime + 0.45);
+    }
+
+    soundBtn.addEventListener('click', function () {
+      soundEnabled = true;
+      soundBtn.textContent = '✅ Bell Sound Enabled';
+      playBell();
+    });
+
+    document.querySelectorAll('input, textarea').forEach(el => {
+      el.addEventListener('focus', () => {
+        playBell();
+      });
+    });
 
     form.addEventListener('submit', function () {
       const contactName = document.getElementById('name').value || 'Customer';
       localStorage.setItem('webToCaseContactName', contactName);
+
+      playBell();
 
       submitBtn.disabled = true;
       submitBtn.value = 'Submitting...';
